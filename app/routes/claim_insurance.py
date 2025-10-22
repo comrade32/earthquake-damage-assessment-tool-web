@@ -207,7 +207,7 @@ def submit_damaged_property_image():
         crack_filename = image_response['filename']
         damage_length = image_response['length_ft']
         damage_breadth = image_response['width_ft']
-        print("BP32")
+        print("BAAAAPPPP32")
         print(damage_length)
         print(damage_breadth)
         print(crack_area)
