@@ -373,7 +373,7 @@ def submit_damaged_property():
                     claim_recommended_usd                    
                 ))
             conn.commit()
-            print('Brajendra')
+            print('BAAAAAAAARET')
     except Exception as e:
         conn.rollback()
         current_app.logger.error(f"Error updating damaged property: {e}")
