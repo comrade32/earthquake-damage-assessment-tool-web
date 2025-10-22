@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard Overview{% endblock %}
+
+{% block content %}
+<!-- your dashboard metrics and content here -->
+<h1>Welcome to the Dashboard</h1>
+            <section class="dashboard-metrics">
+                            <!-- Metrics Cards (unchanged) -->
+                            <div class="metric-card">
+                                <i class="fas fa-shield-alt icon-metric"></i>
+                                <h3 class="metric-title">Total Insurance</h3>
+                                <p class="metric-value" id="totalInsurance">Loading...</p>
+                            </div>
+                            <div class="metric-card">
+                                <i class="fas fa-file-alt icon-metric"></i>
+                                <h3 class="metric-title">Total Claims</h3>
+                                <p class="metric-value" id="totalClaims">Loading...</p>
+                            </div>
+                            <div class="metric-card">
+                                <i class="fas fa-image icon-metric"></i>
+                                <h3 class="metric-title">Picture Test</h3>
+                                <p class="metric-value" id="totalPictures">Loading...</p>
+                            </div>
+                            <div class="metric-card">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                <h3 class="metric-title">Total Policy</h3>
+                                <p class="metric-value" id="total_policy_number">Loading...</p>
+                            </div>
+                        </section>
+                        <section class="dashboard-tables">
+                            <div class="table-card">
+                                <div class="card-header">
+                                    <h3>User Information</h3>
+                                </div>
+                                <div class="card-body">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Mobile</th>
+                                                <th>Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td id="name">John Doe</td>
+                                                <td id="email">Signed up</td>
+                                                <td id="mobile">1 hour ago</td>
+                                                <td id="address">1 hour ago</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+            </section>
+
+<script>
+  async function fetchDashboardCounts() {
+    const token = localStorage.getItem('token');
+    try {
+      const response = await fetch('/api/dashboard', {
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      });
+      const data = await response.json();
+      document.getElementById('totalInsurance').textContent = data.total_insurance_count ?? 0;
+      document.getElementById('totalClaims').textContent = data.total_claims_count ?? 0;
+      document.getElementById('totalPictures').textContent = data.total_picture_tests ?? 0;
+      document.getElementById('total_policy_number').textContent = data.total_policy_number ?? 0;
+      document.getElementById('name').textContent = data.name ?? '';
+      document.getElementById('email').textContent = data.email ?? '';
+      document.getElementById('mobile').textContent = data.mobile ?? '';
+      document.getElementById('address').textContent = data.address ?? '';
+    } catch (error) {
+      console.error('Failed to fetch dashboard counts:', error);
+      // Optionally set default or error text here
+    }
+  }
+  fetchDashboardCounts();
+</script>
+
+{% endblock %}

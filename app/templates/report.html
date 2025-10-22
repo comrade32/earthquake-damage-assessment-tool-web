@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Damaged Property Report{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h1>Damaged Property Report</h1>
+  <div class="table-wrapper">
+    <table class="report-table" id="reportTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Insurance Code</th>
+          <th>Insurance Type</th>
+          <th>Policy Number</th>
+          <th>Claims Code</th>
+          <th>Property Type</th>
+          <th>Wall Type</th>
+          <th>Rate/Sq Ft</th>
+          <th>Confidence</th>
+          <th>Crack %</th>
+          <th>AI Decision</th>
+          <th>Picture</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Will populate dynamically from JS -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  async function fetchInsuranceReport() {
+    const token = localStorage.getItem('token');
+    try {
+      const response = await fetch('/api/insurance_report', {
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      });
+      if(!response.ok) {
+        throw new Error('Failed to fetch: ' + response.statusText);
+      }
+      const records = await response.json();
+
+      const tbody = document.querySelector("#reportTable tbody");
+      tbody.innerHTML = '';
+
+      for(const rec of records) {
+        const tr = document.createElement('tr');
+        
+        tr.innerHTML = `
+          <td title="${rec.name}">${rec.name}</td>
+          <td title="${rec.email}">${rec.email}</td>
+          <td title="${rec.insurance_code}">${rec.insurance_code}</td>
+          <td title="${rec.insurance_type}">${rec.insurance_type}</td>
+          <td title="${rec.policy_number}">${rec.policy_number}</td>
+          <td title="${rec.claims_code}">${rec.claims_code}</td>
+          <td title="${rec.property_type || ''}">${rec.property_type || ''}</td>
+          <td title="${rec.wall_type || ''}">${rec.wall_type || ''}</td>
+          <td>${rec.rate_per_sqft}</td>
+          <td>${(rec.confidence || 0).toFixed(2)}%</td>
+          <td>${(rec.crack_percent || 0).toFixed(2)}%</td>
+          <td><span class="${rec.ai_decision === 'Positive (Crack Detected)' ? 'badge badge-success' : 'badge badge-danger'}">${rec.ai_decision}</span></td>
+          <td>${rec.file_name ? `<img src="/static/upload_image/${rec.file_name}" class="thumb" alt="Image" />` : 'No Image'}</td>
+        `;
+        tbody.appendChild(tr);
+      }
+    } catch(error) {
+      console.error('Error loading insurance report', error);
+    }
+  }
+  fetchInsuranceReport();
+</script>
+{% endblock %}

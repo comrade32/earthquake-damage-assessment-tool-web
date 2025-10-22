@@ -1,0 +1,170 @@
+:root {
+    --primary-color: #2d3748;
+    --secondary-color: #1a202c;
+    --text-color: #e2e8f0;
+    --text-secondary: #a0aec0;
+    --accent-color: #4299e1;
+    --accent-hover: #3182ce;
+    --card-bg: #2d3748;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Body and basic styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styles */
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: var(--secondary-color);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    color: var(--text-color);
+    z-index: 1100;
+}
+.header-left {
+    display: flex;
+    align-items: center;
+}
+.header-logo {
+    height: 50px;
+    margin-right: 1rem;
+    transition: transform 0.3s;
+    filter: drop-shadow(0 0 10px #000);
+    background: white;
+}
+.header-logo:hover {
+    transform: scale(1.1);
+}
+.header-company-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    user-select: none;
+}
+
+/* Footer Styles */
+.app-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background-color: var(--secondary-color);
+    color: var(--text-secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+    user-select: none;
+    z-index: 1100;
+}
+
+/* Layout Spacing for Fixed Header/Footer and Sidebar space */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+/* Main Content */
+.main-content {
+    flex-grow: 1;
+    margin-left: 250px;
+    padding: 2rem;
+}
+.main-header {
+    margin-bottom: 2rem;
+}
+.main-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+/* Dashboard Metrics */
+.dashboard-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+.metric-card {
+    background-color: var(--card-bg);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px var(--shadow-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.icon-metric {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+.metric-title {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+.metric-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0.5rem 0 0;
+}
+
+/* Tables */
+.table-card {
+    background-color: var(--card-bg);
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px var(--shadow-color);
+    padding: 1.5rem;
+}
+.card-header h3 {
+    margin: 0 0 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+thead th {
+    text-align: left;
+    color: var(--text-secondary);
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #4a5568;
+}
+tbody td {
+    padding: 1rem 0;
+    border-bottom: 1px solid #4a5568;
+    color: var(--text-color);
+}
+
+/* Responsive design for mobile screens */
+@media (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+        padding-top: 60px;
+        padding-bottom: 40px;
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+    .dashboard-metrics {
+        grid-template-columns: 1fr;
+    }
+}

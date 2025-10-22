@@ -1,2 +1,1 @@
-# earthquake-damage-assessment-tool-web
-earthquake-damage-assessment-tool
+# earthquake_detection_web_app

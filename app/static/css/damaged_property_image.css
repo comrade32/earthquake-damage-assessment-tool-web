@@ -1,0 +1,259 @@
+.damaged-image-page {
+  --primary-color: #2d3748;
+  --secondary-color: #1a202c;
+  --text-color: #e2e8f0;
+  --text-secondary: #a0aec0;
+  --accent-color: #4299e1;
+  --accent-hover: #3182ce;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+.damaged-image-page body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--secondary-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  padding-bottom: 60px;
+}
+
+.damaged-image-page .app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: var(--secondary-color);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  color: var(--text-color);
+  z-index: 1000;
+}
+
+.damaged-image-page .header-left {
+  display: flex;
+  align-items: center;
+}
+
+.damaged-image-page .header-logo {
+  height: 50px;
+  margin-right: 1rem;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 0 10px #000);
+  background: white;
+}
+
+.damaged-image-page .header-logo:hover {
+  transform: scale(1.1);
+}
+
+.damaged-image-page .header-company-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  user-select: none;
+}
+
+.damaged-image-page .sidebar {
+  display: none;
+}
+
+.damaged-image-page .main-content {
+  flex-grow: 1;
+  margin: 80px auto 60px;
+  padding: 0 1.5rem;
+  max-width: 480px;
+  width: 100%;
+}
+
+.damaged-image-page .login-card {
+  background-color: var(--primary-color);
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -2px var(--shadow-color);
+  padding: 2rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.damaged-image-page .login-card:hover {
+  box-shadow: 0 14px 18px -4px var(--shadow-color), 0 7px 10px -4px var(--shadow-color);
+}
+
+.damaged-image-page .login-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.damaged-image-page .title-container {
+  flex-grow: 1;
+}
+
+.damaged-image-page .login-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.damaged-image-page .login-subtitle {
+  color: var(--text-secondary);
+  margin: 0;
+  text-align: left;
+}
+
+.damaged-image-page .input-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.damaged-image-page .login-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #4a5568;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border-radius: 0.5rem;
+  transition: all 0.2s ease-in-out;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.damaged-image-page .login-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
+.damaged-image-page textarea.login-input {
+  resize: vertical;
+}
+
+.damaged-image-page .login-button {
+  width: 100%;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease-in-out;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.damaged-image-page .login-button:hover {
+  background-color: var(--accent-hover);
+}
+
+.damaged-image-page .app-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background-color: var(--secondary-color);
+  color: var(--text-secondary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+  user-select: none;
+  z-index: 1000;
+  box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+}
+
+.damaged-image-page .form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.damaged-image-page .form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.damaged-image-page .half-width {
+  max-width: 48%;
+}
+
+.dz-preview-container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  justify-content: flex-start;
+}
+
+.dz-preview {
+  border-radius: 1rem !important;
+  width: 120px !important;
+  height: 120px !important;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+.dz-preview img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  border-radius: 1rem !important;
+}
+
+.dz-remove {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--accent-color) !important;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+
+.dropzone {
+  background-color: var(--primary-color) !important;
+  border: 2px dashed var(--accent-color) !important;
+  border-radius: 1rem !important;
+  color: var(--text-color) !important;
+  padding: 1rem !important;
+}
+
+.dropzone .dz-message {
+  font-size: 1.2rem;
+  color: var(--text-secondary) !important;
+  text-align: center;
+}
+
+.dropzone .dz-preview.dz-image-preview {
+  background-color: var(--primary-color) !important;
+  border-radius: 1rem !important;
+  margin: 0.5rem 0;
+}
+
+.dropzone .dz-preview .dz-image {
+  border-radius: 0.5rem !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+}
+
+.dropzone .dz-preview:hover {
+  box-shadow: 0 0 10px var(--accent-color) !important;
+}
+
+.dz-remove {
+  color: var(--accent-color) !important;
+  cursor: pointer;
+  font-weight: 600;
+}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Damaged Property Calculation{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Insurance Summary Of :-  {{ records[0]['name'] if records and records[0]['name'] is defined else 'N/A' }}</h2>
+  
+
+  <!-- Claims Table -->
+  <table class="table table-bordered align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Claim Code</th>
+        <th>Policy Number</th>
+        <th>Insurance Code</th>
+        <th>Picture</th>
+        <th>AI Decision</th>
+        <th>Confidence</th>
+        <th>Crack %</th>
+        <th>Claim Recommended</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% if records %}
+      {% for record in records %}
+        <tr>
+          <td>{{ record.claim_id or 'N/A' }}</td>
+          <td>{{ record.policy_number or 'N/A' }}</td>
+          <td>{{ record.insurance_id or 'N/A' }}</td>
+          <td>
+            {% if record.file_name %}
+              <!-- Modal -->
+              <div class="modal fade" id="picModal{{ loop.index }}" tabindex="-1" aria-labelledby="modalLabel{{ loop.index }}" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <!-- <h5 class="modal-title" id="modalLabel{{ loop.index }}">Uploaded Picture</h5> -->
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                      <img src="{{ url_for('static', filename='upload_image/' + record.file_name) }}" alt="Large picture" class="img-fluid" width="100" height="100" />
+                      <!-- <p class="mt-2">{{ record.file_name }}</p> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% else %}
+              <span class="text-muted">No Picture</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if record.crack_percent is defined and record.crack_percent is not none and record.crack_percent > 78 %}
+              Earthquake Damaged
+            {% else %}
+              No Earthquake Damaged
+            {% endif %}
+          </td>
+          <td>{{ "%.2f"|format(record.confidence or 0) }}%</td>
+          <td>{{ "%.2f"|format(record.crack_percent or 0) }}%</td>
+          <td>
+            {% if record.crack_percent is defined and record.crack_percent is not none and record.crack_percent > 78 %}
+              {{ "%.2f"|format(record.claim_recommended or 0) }} INR
+            {% else %}
+              0
+            {% endif %}
+        </td>
+        </tr>
+      {% endfor %}
+    {% else %}
+      <tr>
+        <td colspan="6" class="text-center">No records available.</td>
+      </tr>
+    {% endif %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+

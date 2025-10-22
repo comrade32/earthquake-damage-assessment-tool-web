@@ -1,0 +1,102 @@
+:root {
+  --primary-color: #2d3748;
+  --secondary-color: #1a202c;
+  --text-color: #e2e8f0;
+  --text-secondary: #a0aec0;
+  --accent-color: #4299e1;
+  --accent-hover: #3182ce;
+  --card-bg: #2d3748;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+.container {
+  max-width: 1400px;
+  margin: auto;
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px var(--shadow-color);
+  font-family: 'Inter', sans-serif;
+  color: var(--text-color);
+}
+
+/* Horizontal scroll wrapper */
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background-color: var(--card-bg);
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px var(--shadow-color);
+  margin-bottom: 1.5rem;
+  /* Optionally, set a max-height for vertical scroll */
+}
+
+.report-table {
+  min-width: 1800px;   /* wide enough for your content */
+  border-collapse: collapse;
+  table-layout: auto;
+  white-space: nowrap; /* keeps content on one line */
+}
+
+
+.report-table th,
+.report-table td {
+  min-width: 150px;    /* wider columns */
+  padding: 16px 24px;
+  text-align: center;
+  border: 1px solid #3a3f51;
+  background: transparent;
+  color: var(--text-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  font-size: 1.1rem;
+}
+
+.report-table th {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.report-table thead {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+.report-table tbody tr:nth-child(even) {
+  background-color: #252a38;
+}
+
+.report-table tbody tr:hover {
+  background-color: #1e2230;
+  cursor: pointer;
+}
+
+.thumb {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.no-records {
+  text-align: center;
+  padding: 20px 0;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+/* (Optional) Make first few columns even wider if needed */
+.report-table th:nth-child(1),
+.report-table td:nth-child(1),
+.report-table th:nth-child(2),
+.report-table td:nth-child(2) {
+  min-width: 220px;
+}
+
+.report-table th:nth-child(14),
+.report-table td:nth-child(14) {
+  min-width: 110px;
+}

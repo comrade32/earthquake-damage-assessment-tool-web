@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Insurance Claims{% endblock %}
+
+{% block content %}
+  <div class="insurance-page">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="title-container">
+          <h1 class="login-title">Insurance Claims</h1>
+          <p class="login-subtitle">Enter your insurance claim information below.</p>
+        </div>
+      </div>
+
+      <form id="insuranceClaimsForm" action="/submit_insurance_claims" method="POST">
+      <input type="hidden" id="user_id" name="user_id" value="{{ user_id }}">
+          <div class="form-row">
+            <div class="form-group half-width">
+              <label for="insuranceClaimsCode" class="input-label">Insurance Code</label>
+              <select id="insuranceCode" name="insurance_id" class="login-input" required>
+                <option value="">Select insurance code</option>
+                {% for insurance in insurance_code_all %}
+                  <option value="{{ insurance.insurance_code }}">{{ insurance.insurance_code }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group half-width">
+              <label for="PolicyNumber" class="input-label">Policy Number</label>
+              <select id="policyNumber" name="policy_number" class="login-input" required>
+                <option value="">Select Policy Number</option>
+                {% for insurance in insurance_code_all %}
+                  <option value="{{ insurance.policy_number }}">{{ insurance.policy_number }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group half-width">
+              <label for="insuranceClamCode" class="input-label">Insurance Claims Code</label>
+              <input type="text" id="insuranceClaimsCode" name="claims_code" value="" class="login-input" placeholder="Enter claims code" required/>
+            </div>
+          <div class="form-group full-width">
+            <label for="claimsDetails" class="input-label">Claims Details</label>
+            <input type="text" id="claimsDetails" name="claim_details" class="login-input" placeholder="Describe claim details" required/>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label for="timeOfLoss" class="input-label">Time Of Loss</label>
+            <input type="datetime-local" id="timeOfLoss" name="time_of_loss" class="login-input" required />
+          </div>
+
+          <div class="form-group half-width">
+            <label for="situationOfLoss" class="input-label">Location of Loss Occured</label>
+            <input type="text" id="situationOfLoss" name="situation_of_loss" class="login-input" placeholder="Describe situation" required/>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group full-width">
+            <label for="causeOfLoss" class="input-label">Cause of Loss Occured</label>
+            <input type="text" id="causeOfLoss" name="cause_of_loss" class="login-input" placeholder="Describe cause" required/>
+          </div>
+        </div>
+        <button type="submit" class="login-button">Next</button>
+        <!-- <button type="button" class="login-button" onclick="location.href='/insurance_claims_value_details'">Next</button> -->
+      </form>
+    </div>
+  </div>
+  <script>
+    async function insurance_claims_detail() {
+    const token = localStorage.getItem('token');
+    try {
+      const response = await fetch('/api/insurance_claims_detail', {
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      });
+      const data = await response.json();
+      // Insurance code dropdown
+      const insuranceCodeSelect = document.getElementById('insuranceCode');
+  
+      // Hidden user id input
+      const userIdInput = document.getElementById('user_id');
+      userIdInput.value = data.user_id;
+
+      // Clear old options except placeholders
+      insuranceCodeSelect.options.length = 1;
+
+      // Populate both dropdowns
+      data.insurance_codes.forEach(item => {
+        // Insurance code option
+        const optionCode = document.createElement('option');
+        optionCode.value = item.insurance_code;
+        optionCode.textContent = item.insurance_code;
+        insuranceCodeSelect.appendChild(optionCode);
+      });
+    } catch (error) {
+      console.error('Failed to fetch insurance claims detail:', error);
+    }
+  }
+  insurance_claims_detail();
+
+  document.getElementById('insuranceCode').addEventListener('change', function () {
+  const selectedCode = this.value;
+  const policyNumberSelect = document.getElementById('policyNumber');
+  policyNumberSelect.options.length = 1; // Keep placeholder only
+  if (!selectedCode) return;
+
+  fetch('/api/get_policy?insurance_code=' + encodeURIComponent(selectedCode))
+    .then(response => response.json())
+    .then(data => {
+      data.policy_number_all.forEach(policyNumber => {
+        const option = document.createElement('option');
+        option.value = policyNumber;
+        option.textContent = policyNumber;
+        policyNumberSelect.appendChild(option);
+      });
+    })
+    .catch(error => {
+      console.error('Failed to fetch policy numbers:', error);
+    });
+});
+
+</script>
+
+{% endblock %}

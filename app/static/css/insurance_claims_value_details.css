@@ -1,0 +1,185 @@
+.claims-value-page {
+  --primary-color: #2d3748;
+  --secondary-color: #1a202c;
+  --text-color: #e2e8f0;
+  --text-secondary: #a0aec0;
+  --accent-color: #4299e1;
+  --accent-hover: #3182ce;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+.claims-value-page body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--secondary-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  padding-bottom: 60px;
+}
+
+.claims-value-page .app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: var(--secondary-color);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  color: var(--text-color);
+  z-index: 1000;
+}
+
+.claims-value-page .header-left {
+  display: flex;
+  align-items: center;
+}
+
+.claims-value-page .header-logo {
+  height: 50px;
+  margin-right: 1rem;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 0 10px #000);
+  background: white;
+}
+
+.claims-value-page .header-logo:hover {
+  transform: scale(1.1);
+}
+
+.claims-value-page .header-company-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  user-select: none;
+}
+
+.claims-value-page .sidebar {
+  display: none;
+}
+
+.claims-value-page .main-content {
+  flex-grow: 1;
+  margin: 80px auto 60px;
+  padding: 0 1.5rem;
+  max-width: 480px;
+  width: 100%;
+}
+
+.claims-value-page .login-card {
+  background-color: var(--primary-color);
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -2px var(--shadow-color);
+  padding: 2rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.claims-value-page .login-card:hover {
+  box-shadow: 0 14px 18px -4px var(--shadow-color), 0 7px 10px -4px var(--shadow-color);
+}
+
+.claims-value-page .login-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.claims-value-page .title-container {
+  flex-grow: 1;
+}
+
+.claims-value-page .login-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.claims-value-page .login-subtitle {
+  color: var(--text-secondary);
+  margin: 0;
+  text-align: left;
+}
+
+.claims-value-page .input-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.claims-value-page .login-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #4a5568;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border-radius: 0.5rem;
+  transition: all 0.2s ease-in-out;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.claims-value-page .login-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
+.claims-value-page textarea.login-input {
+  resize: vertical;
+}
+
+.claims-value-page .login-button {
+  width: 100%;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease-in-out;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.claims-value-page .login-button:hover {
+  background-color: var(--accent-hover);
+}
+
+.claims-value-page .app-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background-color: var(--secondary-color);
+  color: var(--text-secondary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+  user-select: none;
+  z-index: 1000;
+  box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+}
+
+.claims-value-page .form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.claims-value-page .form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.claims-value-page .half-width {
+  max-width: 48%;
+}

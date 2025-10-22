@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Insurance Details{% endblock %}
+
+{% block content %}
+  <div class="insurance-page">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="title-container">
+          <h1 class="login-title">Insurance Details</h1>
+          <p class="login-subtitle">Enter your insurance information below.</p>
+        </div>
+      </div>
+      <form id="insuranceForm" action="/submit_insurance_detail" method="POST">
+        <input type="hidden" id="user_id" name="username" value="">
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label for="insuranceCode" class="input-label">Insurance Code</label>
+            <input type="text" id="insuranceCode" name="insurance_code" class="login-input" placeholder="Enter insurance code" required/>
+          </div>
+          <div class="form-group half-width">
+            <label for="insuredFrom" class="input-label">Insured From</label>
+            <input type="datetime-local" id="insuredFrom" name="insurance_from" class="login-input" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label for="insuredTill" class="input-label">Insured Till</label>
+            <input type="datetime-local" id="insuredTill" name="insurance_to" class="login-input" required />
+          </div>
+          <div class="form-group half-width">
+            <label for="insuranceType" class="input-label">Insurance Type</label>
+            <select id="insuranceType" name="insurance_type" class="login-input" required>
+              <option value="">Select type</option>
+              <option value="earthquake">Earthquake</option>
+              <option value="flood">Flood</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label for="nameOfInsured" class="input-label">Name of Insured</label>
+            <input type="text" id="nameOfInsured" name="insured" class="login-input" placeholder="Full name" required/>
+          </div>
+          <div class="form-group half-width">
+            <label for="occupationOfInsured" class="input-label">Occupation of Insured</label>
+            <input type="text" id="occupationOfInsured" name="occupation" class="login-input" placeholder="Occupation" required/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label for="occupationOfInsured" class="input-label">Policy Number</label>
+            <input type="text" id="PolicyNumber" name="policy_number" class="login-input" placeholder="Policy Number" required/>
+          </div>
+          <div class="form-group half-width">
+            <label for="status" class="input-label">Status</label>
+            <select id="status" name="status" class="login-input" required>
+              <option value="">Select status</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group half-width">
+              <label for="insuranceDetails" class="input-label">Insurance Details</label>
+              <textarea id="insuranceDetails" name="insurance_details" class="login-input" rows="4" placeholder="Additional details"></textarea>
+          </div>
+      </div>
+        <button type="submit" class="login-button">Next</button>
+        <!-- <button type="button" class="login-button" onclick="location.href='/insurance_claims_detail'">Next</button> -->
+      </form>
+    </div>
+  </div>
+
+<script>
+  async function fetchUserId() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log("No token, user not logged in");
+      return null;
+    }
+    const response = await fetch('/api/get_user_id', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data.user_id;
+    } else {
+      console.error('Failed to get user ID:', response.status);
+      return null;
+    }
+  }
+
+  async function setUserId() {
+    const userId = await fetchUserId();
+    if (userId) {
+      document.getElementById('user_id').value = userId;
+      return true;
+    }
+    return false;
+  }
+
+  document.getElementById('insuranceForm').addEventListener('submit', async function(event) {
+    event.preventDefault(); // stop normal form submit
+
+    const success = await setUserId();
+
+    if (!success) {
+      alert('User not logged in. Please login again.');
+      return;  // cancel submit
+    }
+
+    // proceed to submit the form now user_id is set
+    event.target.submit();
+  });
+</script>
+
+{% endblock %}

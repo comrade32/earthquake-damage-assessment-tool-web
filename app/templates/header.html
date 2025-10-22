@@ -1,0 +1,31 @@
+<header class="app-header">
+  <div class="header-left">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="header-logo" />
+    <span class="header-company-name"></span>
+  </div>
+  <div class="header-right" style="margin-left:auto; font-weight:600; font-size:14px;">
+    <span id="currentDateTime"></span>
+  </div>
+</header>
+
+<script>
+  function updateDateTime() {
+    const now = new Date();
+    const options = { weekday: 'long' };
+    const day = now.toLocaleDateString('en-US', options);
+    const month = now.toLocaleString('default', { month: 'long' });
+    const date = now.getDate();
+    const year = now.getFullYear();
+    let hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+    const timeStr = `${hours}:${minutes}:${seconds} ${ampm}`;
+    const dateStr = `${day}, ${month} ${date}, ${year}`;
+    document.getElementById('currentDateTime').textContent = `${dateStr} | ${timeStr}`;
+  }
+
+  updateDateTime();
+  setInterval(updateDateTime, 1000);
+</script>

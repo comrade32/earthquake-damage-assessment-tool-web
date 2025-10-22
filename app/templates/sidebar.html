@@ -1,0 +1,22 @@
+<aside class="sidebar">
+  <nav class="sidebar-nav">
+    <ul>
+      <li class="nav-item {% if request.path.startswith('/dashboard') %}active{% endif %}">
+        <a href="{{ url_for('dashboard.dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      </li>
+      <li class="nav-item {% if request.path.startswith('/claim_insurance') %}active{% endif %}">
+        <a href="{{ url_for('claim.claim_insurance') }}"><i class="fas fa-file-medical-alt"></i> Add Insurance</a>
+      </li>
+      <li class="nav-item {% if request.path.startswith('/insurance_claims_detail') %}active{% endif %}">
+        <a href="{{ url_for('claim.insurance_claims_detail') }}"><i class="fas fa-file-medical-alt"></i> Add Claim</a>
+      </li>
+      <li class="nav-item {% if request.path.startswith('/insurance_report') %}active{% endif %}">
+        <a href="{{ url_for('claim.insurance_report') }}""><i class="fas fa-file-alt"></i> Report</a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </li>
+      <!-- other nav items -->
+    </ul>
+  </nav>
+</aside>

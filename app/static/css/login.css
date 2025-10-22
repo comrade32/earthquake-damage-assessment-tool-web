@@ -1,0 +1,194 @@
+:root {
+    --primary-color: #2d3748;
+    --secondary-color: #1a202c;
+    --text-color: #e2e8f0;
+    --text-secondary: #a0aec0;
+    --accent-color: #4299e1;
+    --accent-hover: #3182ce;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Header */
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: var(--secondary-color);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    color: var(--text-color);
+    z-index: 1000;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-logo {
+    height: 50px;
+    margin-right: 1rem;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 0 10px #000);
+    background: white;
+}
+
+.header-logo:hover {
+    transform: scale(1.1);
+}
+
+.header-company-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    user-select: none;
+}
+
+/* Main Content */
+.main-content {
+    flex-grow: 1;
+    margin: 80px auto 60px;
+    padding: 0 1.5rem;
+    max-width: 480px;
+    width: 100%;
+}
+
+.login-card {
+    background-color: var(--primary-color);
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -2px var(--shadow-color);
+    padding: 2rem;
+    transition: box-shadow 0.3s ease;
+}
+
+.login-card:hover {
+    box-shadow: 0 14px 18px -4px var(--shadow-color), 0 7px 10px -4px var(--shadow-color);
+}
+
+/* Header text on the form */
+.login-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.company-logo {
+    width: 60px;
+    height: 60px;
+    margin-right: 1.5rem;
+}
+
+.title-container {
+    flex-grow: 1;
+}
+
+.login-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+.login-subtitle {
+    color: var(--text-secondary);
+    margin: 0;
+    text-align: left;
+}
+
+/* Form styling */
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-label {
+    display: block;
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.login-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #4a5568;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border-radius: 0.5rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.login-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
+.login-button {
+    width: 100%;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    font-weight: 700;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease-in-out;
+    border: none;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background-color: var(--accent-hover);
+}
+
+/* Footer */
+.app-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background-color: var(--secondary-color);
+    color: var(--text-secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+    user-select: none;
+}
+
+/* Login footer bottom text */
+.login-footer {
+    margin-top: 2rem;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.footer-link {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.footer-link:hover,
+.footer-link:focus {
+    color: var(--accent-hover);
+    text-decoration: underline;
+}
+
+/* Optional: Add media queries for better responsiveness */
+@media (min-width: 640px) {
+    .login-card {
+        padding: 2.5rem;
+    }
+}

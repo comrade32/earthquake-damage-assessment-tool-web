@@ -1,0 +1,311 @@
+{% extends "base.html" %}
+
+{% block title %}Damaged Property Details{% endblock %}
+
+{% block content %}
+<div class="claim-wise-page">
+  <h1 class="cw-header">Claim Wise Report</h1>
+  <form class="cw-form" method="POST" action="/submit_claim_report">
+    <input type="hidden" name="claims_id"  value="{{claims_id}}"/>
+    <input type="hidden" name="claim_property_details_id"  value="{{claim_property_details_id}}"/>
+    <input type="hidden" name="claims_code" value="{{claims_code}}" />
+    <input type="hidden" name="cpa_id" id="cpa_id"/>
+    <div class="cw-row">
+      <!-- Left column -->
+      <div class="cw-col">
+        <label for="insuranceCode" class="input-label">Insurance Code</label>
+        <select id="insuranceCode" class="cw-input" name="insurance_code" required>
+            <option value="">Select Insurance Code</option>
+            {% for ins in all_insurance_code %}
+                <option value="{{ ins.insurance_code }}" {% if get_select_insurance_code_one and ins.insurance_code == get_select_insurance_code_one.insurance_id %}selected{% endif %}>{{ ins.insurance_code }}</option>
+            {% endfor %}
+            </select>
+
+        <label for="aiResponse" class="input-label" style="margin-top:1rem;">AI Response Accepted?</label>
+        <select id="aiResponse" class="cw-input" name="user_inference" required>
+            <option value="">Select Option</option>
+            <option value="yes" {% if request.args.get('user_inference', '') == 'yes' %}selected{% endif %}>Yes</option>
+            <option value="no" {% if request.args.get('user_inference', '') == 'no' %}selected{% endif %}>No</option>
+        </select>
+      </div>
+
+      <!-- Middle column -->
+      <div class="cw-col">
+        <label for="policyCode" class="input-label">Policy Code</label>
+        <select id="policyCode" class="cw-input" name="policy_code" required>
+            <option value="">Select Policy Code</option>
+            {% if get_select_policy_number_one %}
+                <option value="{{ get_select_policy_number_one.policy_number }}" selected>{{ get_select_policy_number_one.policy_number }}</option>
+            {% endif %}
+        </select>
+
+        <div class="cw-col-single">
+          <div class="cw-image-box-crack">
+            <img id="assessmentImage" src="" alt="Detected Crack" class="img-fluid" width="300" height="300" />
+          </div>
+        </div>
+        <div id="finalDamageInputs" style="display: none;">
+            <label for="finalDamageArea" class="input-label" style="margin-top:1rem;">Final Damage Area</label>
+            <input type="text" id="finalDamageArea" class="cw-input" name="final_damage_area"
+                placeholder="Final Damage Area"
+                value="{{ request.args.get('final_damage_area', '') }}" />
+
+            <label for="finaldamageCost" class="input-label">Final Damage Cost</label>
+            <input type="text" id="finaldamageCost" class="cw-input" name="final_damage_cost"
+                placeholder="Final Damage Cost"
+                value="{{ request.args.get('final_damage_cost', '') }}" />
+      </div>
+         <button type="submit" id="submitButton" class="cw-submit-btn">Submit</button>
+      </div>
+
+      <!-- Right column -->
+      <div class="cw-col cw-col-wide">
+        <label for="claimCode" class="input-label">Claim Code</label>
+        <select id="claimCode" class="cw-input" name="claim_code" required>
+        <option value="">Select Claim Code</option>
+        {% if get_select_claims_code_one %}
+            <option value="{{ get_select_claims_code_one.claims_code }}" selected>{{ get_select_claims_code_one.claims_code }}</option>
+        {% endif %}
+        </select>
+
+        <label for="aiDecision" class="input-label">AI Decision</label>
+        <input type="text" id="aiDecision" class="cw-input" name="ai_decision" placeholder="AI Decision" readonly/>
+
+        <label for="confidenceLevel" class="input-label">Confidence Level</label>
+        <input type="text" id="confidenceLevel" class="cw-input" name="confidence_level" placeholder="Confidence Level" readonly/>
+
+        <label for="recommendedClaim" class="input-label">Recommended Claim Amount</label>
+        <input type="text" id="recommendedClaim" class="cw-input" name="recommended_claim_amount" placeholder="Recommended Claim Amount" readonly/>
+
+        <label for="lengthFt" class="input-label">Length (in Ft)</label>
+        <input type="text" id="lengthFt" class="cw-input" name="length_ft" placeholder="Length (in Ft)" readonly/>
+
+        <label for="breadthFt" class="input-label">Breadth (in Ft)</label>
+        <input type="text" id="breadthFt" class="cw-input" name="breadth_ft" placeholder="Breadth (in Ft)" readonly/>
+
+        <label for="areaSqft" class="input-label">Area (in SqFt)</label>
+        <input type="text" id="areaSqft" class="cw-input" name="area_sqft" placeholder="Area (in SqFt)" readonly/>
+
+        <!-- <label for="distance" class="input-label">Distance</label>
+        <input type="text" id="distance" class="cw-input" name="distance" placeholder="Distance" /> -->
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const aiResponse = document.getElementById('aiResponse');
+    const finalDamageInputs = document.getElementById('finalDamageInputs');
+
+    function toggleDamageInputs() {
+      if (aiResponse.value === 'no') {
+        finalDamageInputs.style.display = 'block';
+      } else {
+        finalDamageInputs.style.display = 'none';
+      }
+    }
+
+    // Initial toggle on page load
+    toggleDamageInputs();
+
+    // Listen for changes on the dropdown
+    aiResponse.addEventListener('change', () => {
+      toggleDamageInputs();
+    });
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const aiResponse = document.getElementById('aiResponse');
+    const finalDamageInputs = document.getElementById('finalDamageInputs');
+    const finalDamageArea = document.getElementById('finalDamageArea');
+    const finalDamageCost = document.getElementById('finaldamageCost');
+    const submitButton = document.getElementById('submitButton');
+
+    // Helper: Read value from URL
+    function getQueryParam(param) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(param) || "";
+    }
+
+    const userInference = getQueryParam('user_inference');
+    const areaVal = getQueryParam('final_damage_area');
+    const costVal = getQueryParam('final_damage_cost');
+
+    // Prefill inputs safely
+    if (areaVal) finalDamageArea.value = areaVal;
+    if (costVal) finalDamageCost.value = costVal;
+    if (userInference) aiResponse.value = userInference;
+
+    // Control visibility & readonly
+    function toggleVisibility() {
+      if (aiResponse.value === 'no') {
+        finalDamageInputs.style.display = 'block';
+        // If data came from URL, lock inputs and hide submit
+        if (userInference) {
+          finalDamageArea.readOnly = true;
+          finalDamageCost.readOnly = true;
+          submitButton.style.display = 'none';
+          aiResponse.disabled = true;
+        }
+      } else if (aiResponse.value === 'yes') {
+        finalDamageInputs.style.display = 'none';
+        if (userInference) {
+          aiResponse.disabled = true;
+          submitButton.style.display = 'none';
+        }
+      } else {
+        finalDamageInputs.style.display = 'none';
+        submitButton.style.display = 'block';
+      }
+    }
+
+    // Run on load
+    toggleVisibility();
+
+    // Change event only works if dropdown not disabled
+    aiResponse.addEventListener('change', toggleVisibility);
+  });
+</script>
+
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+  const insuranceDropdown = document.getElementById('insuranceCode');
+  const policyDropdown = document.getElementById('policyCode');
+  const claimsDropdown = document.getElementById('claimCode');
+
+  const aiDecisionInput = document.getElementById('aiDecision');
+  const recommendedClaimInput = document.getElementById('recommendedClaim');
+  const confidenceLevelInput = document.getElementById('confidenceLevel');
+  const lengthFtInput = document.getElementById('lengthFt');
+  const breadthFtInput = document.getElementById('breadthFt');
+  const areaSqftInput = document.getElementById('areaSqft');
+  const assessmentImage = document.getElementById('assessmentImage');
+  const Inputcpa_id = document.getElementById('cpa_id');
+
+  // Clear all input fields and image
+  function clearInputs() {
+    aiDecisionInput.value = '';
+    recommendedClaimInput.value = '';
+    confidenceLevelInput.value = '';
+    lengthFtInput.value = '';
+    breadthFtInput.value = '';
+    areaSqftInput.value = '';
+    Inputcpa_id.value = '';
+    assessmentImage.src = '';
+  }
+
+  // Check if all dropdowns have valid selections
+  function allDropdownsSelected() {
+    return insuranceDropdown.value && policyDropdown.value && claimsDropdown.value;
+  }
+
+  // Fetch assessment data and populate fields
+  function fetchAndPopulate(claimsCode) {
+    if (!claimsCode) {
+      clearInputs();
+      return;
+    }
+
+    fetch('/get_assessment_data?claims_code=' + encodeURIComponent(claimsCode))
+      .then(response => {
+        if (!response.ok) throw new Error('Assessment data not found');
+        return response.json();
+      })
+      .then(data => {
+        aiDecisionInput.value = data.ai_decision || '';
+        // recommendedClaimInput.value = data.claim_recommended || '';
+        recommendedClaimInput.value = (data.ai_decision === 'Negative (No Crack)') ? 0 : (data.claim_recommended || '');
+        confidenceLevelInput.value = data.confidence || '';
+        lengthFtInput.value = data.damage_length || '';
+        breadthFtInput.value = data.damage_breadth || '';
+        areaSqftInput.value = data.damage_area || '';
+        Inputcpa_id.value = data.cpa_id || '';
+        assessmentImage.src = data.file_name ? `/static/upload_image/${data.file_name}` : '';
+      })
+      .catch(() => clearInputs());
+  }
+
+  // Fetch policies based on insurance code, then claims based on selected policy
+  function fetchPolicies(insuranceCode, selectedPolicy=null, selectedClaim=null) {
+    if (!insuranceCode) {
+      policyDropdown.innerHTML = '<option value="">Select Policy Code</option>';
+      claimsDropdown.innerHTML = '<option value="">Select Claim Code</option>';
+      clearInputs();
+      return;
+    }
+    fetch('/get_policy_dropdown?insurance_code=' + insuranceCode)
+      .then(res => res.json())
+      .then(data => {
+        let options = '<option value="">Select Policy Code</option>';
+        data.forEach(policy => {
+          options += `<option value="${policy}"${policy === selectedPolicy ? ' selected' : ''}>${policy}</option>`;
+        });
+        policyDropdown.innerHTML = options;
+
+        // When policies updated, fetch claims accordingly or clear inputs
+        fetchClaims(selectedPolicy, selectedClaim);
+      });
+  }
+
+  // Fetch claims based on policy code
+  function fetchClaims(policyCode, selectedClaim=null) {
+    if (!policyCode) {
+      claimsDropdown.innerHTML = '<option value="">Select Claim Code</option>';
+      clearInputs();
+      return;
+    }
+    fetch('/get_claims_code_dropdown?policy_number=' + policyCode)
+      .then(res => res.json())
+      .then(data => {
+        let options = '<option value="">Select Claim Code</option>';
+        data.forEach(claim => {
+          options += `<option value="${claim}"${claim === selectedClaim ? ' selected' : ''}>${claim}</option>`;
+        });
+        claimsDropdown.innerHTML = options;
+
+        // If all dropdowns selected, fetch assessment data
+        if (allDropdownsSelected()) {
+          fetchAndPopulate(claimsDropdown.value);
+        } else {
+          clearInputs();
+        }
+      });
+  }
+
+  // When insurance changes, update policies and clear/reset
+  insuranceDropdown.addEventListener('change', () => {
+    fetchPolicies(insuranceDropdown.value);
+    clearInputs();
+  });
+
+  // When policy changes, update claims and clear/reset
+  policyDropdown.addEventListener('change', () => {
+    fetchClaims(policyDropdown.value);
+    clearInputs();
+  });
+
+  // When claim changes, fetch data or clear inputs
+  claimsDropdown.addEventListener('change', () => {
+    if (claimsDropdown.value) {
+      fetchAndPopulate(claimsDropdown.value);
+    } else {
+      clearInputs();
+    }
+  });
+
+  // Initial load of cascading dropdowns and assessment data if fully selected
+  const initialInsurance = insuranceDropdown.value;
+  const initialPolicy = policyDropdown.value;
+  const initialClaim = claimsDropdown.value;
+
+  if (initialInsurance) {
+    fetchPolicies(initialInsurance, initialPolicy, initialClaim);
+  }
+});
+
+</script>
+{% endblock %}

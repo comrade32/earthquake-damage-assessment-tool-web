@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}" />
+</head>
+<body class="login-body">
+
+    <header class="app-header">
+        <div class="header-left">
+            <!-- Show logo in header only, remove from sidebar -->
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="header-logo" />
+            <!-- <span class="header-company-name">Proclaim</span> -->
+        </div>
+    </header>
+
+    <aside class="sidebar">
+        <!-- Remove logo here to avoid duplicate -->
+        <!-- Commented or delete this:
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Sidebar Logo" class="sidebar-logo" />
+        -->
+    </aside>
+
+    <main class="main-content">
+        <div class="login-card">
+            <div class="login-header">
+               
+                <div class="title-container">
+                    <h1 class="login-title">Create Your Account</h1>
+                    <p class="login-subtitle">Fill in the details to sign up.</p>
+                </div>
+            </div>
+            <div id="SignUpmsg" class="message-box"></div>
+            <form id="signupForm">
+                <div class="form-row">
+                    <div class="input-group half-width">
+                        <label for="name" class="input-label">Full Name</label>
+                        <input type="text" id="name" name="name" class="login-input" placeholder="Enter your full name" required />
+                    </div>
+                    <div class="input-group half-width">
+                        <label for="email" class="input-label">Email</label>
+                        <input type="email" id="email" name="email" class="login-input" placeholder="Enter your email" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group half-width">
+                        <label for="mobile" class="input-label">Mobile</label>
+                        <input type="tel" id="mobile" name="mobile" class="login-input" placeholder="Enter your mobile number" />
+                    </div>
+                    <div class="input-group half-width">
+                        <label for="address" class="input-label">Address</label>
+                        <input type="text" id="address" name="address" class="login-input" placeholder="Enter your address" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group half-width">
+                        <label for="username" class="input-label">Username</label>
+                        <input type="text" id="username" name="username" class="login-input" placeholder="Choose a username" required />
+                    </div>
+                    <div class="input-group half-width">
+                        <label for="password" class="input-label">Password</label>
+                        <input type="password" id="password" name="password" class="login-input" placeholder="Create a password" required />
+                    </div>
+                </div>
+
+                <button type="submit" class="login-button">Sign Up</button>
+            </form>
+            <div class="login-footer">
+                Already have an account? <a href="/" class="footer-link">Log in here</a>.
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        © 2025 Proclaim. All rights reserved.
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/signup.js') }}"></script>
+</body>
+</html>

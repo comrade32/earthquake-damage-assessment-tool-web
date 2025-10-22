@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Damaged Property Image Upload{% endblock %}
+
+{% block content %}
+  <div class="damaged-image-page">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="title-container">
+          <h1 class="login-title">Damaged Property Image Upload</h1>
+          <p class="login-subtitle">Upload images and provide details below.</p>
+        </div>
+      </div>
+
+      <form id="damagedPropertyImageForm" action="/submit_damaged_property_image" method="POST" enctype="multipart/form-data">
+        <input type="hidden" id="claim_property_details_id" name="claim_property_details_id" class="login-input" value="" />
+         <input type="hidden" id="claimsId" name="claims_id" class="login-input" value="{{claims_id}}" />
+         <input type="hidden" id="claimsCode" name="claims_code" class="login-input" value="{{claims_code}}" />
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label for="fileUpload" class="input-label">File Upload</label>
+            <input type="file" id="fileUpload" name="file_name" class="login-input" accept="image/*" required />
+          </div>
+          <!-- <div class="form-group half-width">
+            <label for="fileFormat" class="input-label">File Format</label>
+            <select id="fileFormat" name="file_format" class="login-input" required>
+              <option value="">Select format</option>
+              <option value="jpg">JPG</option>
+              <option value="png">PNG</option>
+              <option value="jpeg">JPEG</option>
+            </select>
+          </div> -->
+        </div>
+
+        <div class="form-row">
+          <div class="form-group full-width">
+            <label for="fileDescription" class="input-label">File Description</label>
+            <textarea id="fileDescription" name="file_desc" class="login-input" rows="4" placeholder="Add description here"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="login-button">Next</button>
+        <!-- <button type="button" class="login-button" onclick="location.href='/damaged_property_calculation'">Next</button> -->
+      </form>
+    </div>
+  </div>
+{% endblock %}

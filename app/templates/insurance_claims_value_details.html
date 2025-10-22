@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Insurance Claims Value Details{% endblock %}
+
+{% block content %}
+  <div class="claims-value-page">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="title-container">
+          <h1 class="login-title">Insurance Claims Value Details</h1>
+          <p class="login-subtitle">Enter the claim values and losses below.</p>
+        </div>
+      </div>
+
+      <form id="claimsValueForm" action="/submit_claims_values" method="POST">
+      <input type="hidden" id="user_id" name="user_id" value="{{ user_id }}">
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label for="autoPopulated" class="input-label">Claims Code (Auto Populated)</label>
+            <input type="number" id="autoPopulated" name="claims_id" class="login-input" readonly value="{{ claims_code_all[0].claim_id if claims_code_all }}" />
+          </div>
+
+          <div class="form-group half-width">
+            <label for="claimValue" class="input-label">Claim Value</label>
+            <input type="number" id="claimValue" name="claim_value" class="login-input" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label for="recommendedClaimValue" class="input-label">Recommended Claim Value</label>
+            <input type="number" id="recommendedClaimValue" name="claim_recommended" class="login-input" required />
+          </div>
+
+          <div class="form-group half-width">
+            <label for="grossLoss" class="input-label">Gross Loss from Damage</label>
+            <input type="number" id="grossLoss" name="gross_loss" class="login-input" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label for="netLoss" class="input-label">Net Loss from Damage</label>
+            <input type="number" id="netLoss" name="net_loss" class="login-input" required />
+          </div>
+
+          <div class="form-group half-width">
+            <label for="adjustedLoss" class="input-label">Adjusted Loss from Damage</label>
+            <input type="number" id="adjustedLoss" name="adjusted_loss" class="login-input" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group full-width">
+            <label for="finalLoss" class="input-label">Final Loss from Damage</label>
+            <input type="number" id="finalLoss" name="final_loss" class="login-input" required />
+          </div>
+        </div>
+        <button type="submit" class="login-button">Next</button>
+        <!-- <button type="button" class="login-button" onclick="location.href='/damaged_property_details'">Next</button> -->
+      </form>
+    </div>
+  </div>
+{% endblock %}

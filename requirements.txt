@@ -1,0 +1,12 @@
+Flask
+requests
+gunicorn
+pymysql
+python-dotenv
+Werkzeug
+Flask-JWT-Extended
+flask-bcrypt
+torch 
+torchvision 
+timm 
+pillow

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Proclaim Dashboard{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/insurance_form.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/insurance_claims.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/insurance_claims_value_details.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/damaged_property_details.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/damaged_property_image.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/damaged_property_calculation.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/report.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/new_report.css') }}" />
+  <script src="{{ url_for('static', filename='js/logout.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/auth_check.js') }}"></script>
+</head>
+<body>
+  {% include 'header.html' %}
+  <div class="dashboard-container">
+    {% include 'sidebar.html' %}
+    <main class="main-content">
+      {% block content %}
+      <!-- Page specific content injected here -->
+      {% endblock %}
+    </main>
+  </div>
+  {% include 'footer.html' %}
+</body>
+</html>
+
+

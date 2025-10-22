@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Damaged Property Details{% endblock %}
+
+{% block content %}
+  <div class="damaged-property-page">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="title-container">
+          <h1 class="login-title">Damaged Property Details</h1>
+          <p class="login-subtitle">Provide details about the damaged property below.</p>
+        </div>
+      </div>
+
+      <form id="damagedPropertyForm" action="/submit_damaged_property" method="POST">
+        <input type="hidden" id="claimsId" name="claims_id" class="login-input" readonly value="{{ claims_id }}" />
+        <input type="hidden" id="claim_property_details_id" name="claim_property_details_id" class="login-input" readonly value="{{ claim_property_details_id }}" />
+        <input type="hidden" id="claimsCode" name="claims_code" class="login-input" readonly value="{{ claims_code }}" />
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label for="claimsId" class="input-label">Claims Code</label>
+            <input type="text" id="claimsId" name="claims_code" class="login-input" readonly value="{{ claims_code }}" />
+          </div>
+
+          <div class="form-group half-width">
+            <label for="propertyType" class="input-label">Property Type</label>
+            <select id="propertyType" name="property_type" class="login-input" required>
+              <option value="">Select property type</option>
+              <option value="building">Building</option>
+              <option value="office">Office</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label for="wallType" class="input-label">Wall Type</label>
+            <select id="wallType" name="wall_type" class="login-input" required>
+              <option value="">Select wall type</option>
+              <option value="brick_wall">Brick Wall</option>
+              <option value="concrete_Wall">Concrete Wall</option>
+              <option value="wood_wall">Wood Wall</option>
+            </select>
+          </div>
+
+          <div class="form-group half-width">
+            <label for="damagedArea" class="input-label">Damaged Area (in SqFt)</label>
+            <input type="number" id="damagedArea" name="damage_area" class="login-input" min="0" step="any" required value="{{ damage_area['damage_area'] if damage_area else '' }}"/>
+          </div>
+        </div>
+
+        <div class="form-row" style="display: none;">
+          <div class="form-group half-width">
+            <label for="damagedLength" class="input-label">Damaged Length (in Fts)</label>
+            <input type="number" id="damagedLength" name="damage_length" class="login-input" min="0" step="any"/>
+          </div>
+
+          <div class="form-group half-width">
+            <label for="damagedBreadth" class="input-label">Damaged Breadth (in Fts)</label>
+            <input type="number" id="damagedBreadth" name="damage_breadth" class="login-input" min="0" step="any"/>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half-width" style="display: none;">
+            <label for="damagedHeight" class="input-label">Damaged Heights (in Fts)</label>
+            <input type="number" id="damagedHeight" name="damage_height" class="login-input" min="0" step="any"/>
+          </div>
+
+          <div class="form-group half-width">
+            <label for="ratePerSqFt" class="input-label">Rate Per SqFt</label>
+            <input type="number" id="ratePerSqFt" name="rate_per_sqft" class="login-input" min="0" step="any" required value="350"/>
+          </div>
+        </div>
+
+        <!-- <button type="button" class="login-button" onclick="location.href='/damaged_property_image'">Next</button> -->
+         <button type="submit" class="login-button">Next</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
